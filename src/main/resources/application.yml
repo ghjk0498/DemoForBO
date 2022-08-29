@@ -1,0 +1,29 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  # ?? ????
+  devtools:
+    livereload:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/baseball
+    username: postgres
+    password: postgres
+
+logging:
+  pattern:
+    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:line%line] - %msg%n"
+    rolling-file-name: "/logs/abc.%d{yyyy-MM-dd}.%i"
+  file:
+    name: /logs/abc.log
+    max-history: 30
+  level:
+    org:
+      springframework: INFO
