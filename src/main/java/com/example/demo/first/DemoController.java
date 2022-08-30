@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.first;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ public class DemoController {
 
     @GetMapping("/mvc")
     public String mvcPage() {
-        return "mvcPage";
+        return "first/mvcPage";
     }
 
 }
