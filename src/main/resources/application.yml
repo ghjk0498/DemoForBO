@@ -8,14 +8,19 @@ server:
       force: true
 
 spring:
-  # ?? ????
   devtools:
     livereload:
       enabled: true
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/baseball
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
     username: postgres
     password: postgres
+
+mybatis:
+  type-aliases-package: com.example.demo.second
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/*.xml
 
 logging:
   pattern:
