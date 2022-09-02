@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.second.UsersMapper">
-    <select id="selectUsersById" parameterType="String" resultType="UserVO">
-        SELECT username, password
+    <select id="selectUsersByUsername" parameterType="String" resultType="CustomUser">
+        SELECT username, password, role
         FROM demo_for_bo.users
         WHERE username = #{username}
     </select>
+    <insert id="insertUsers" parameterType="CustomUser">
+        INSERT INTO demo_for_bo.users
+            (username, "password", "role")
+        VALUES (#{username}, #{password}, #{role});
+    </insert>
 </mapper>

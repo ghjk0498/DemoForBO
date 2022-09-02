@@ -4,5 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface UsersMapper {
-    UserVO selectUsersById(String username);
+    CustomUser selectUsersByUsername(String username);
+    int insertUsers(CustomUser customUser);
 }

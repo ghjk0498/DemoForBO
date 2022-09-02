@@ -1,13 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <meta name="_csrf" th:content="${_csrf.token}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
-  <form action="login" method="post">
-    username : <input type="text" name="username">
-    pw : <input type="text" name="pw">
-    <input type="submit" value="submit">
+<form action="/second/login" method="post">
+    <label for="username">username : </label>
+    <input type="text" id="username" name="username">
+    <label for="password">password : </label>
+    <input type="password" id="password" name="password">
+    <button type="button" onclick="window.location='./signup'">signup</button>
+    <button type="button" onclick="callLogin()">login</button>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function callLogin() {
+        let data = {
+            username: $("#username").val(),
+            password: $("#password").val(),
+        };
+
+        const header = $("meta[name='_csrf_header']").attr('content');
+        const token = $("meta[name='_csrf']").attr('content');
+
+        $.ajax({
+            url: "/second/login",
+            type: "get",
+            headers: {
+                "Authorization": "Bearer empty",
+            },
+            data: data,
+            contentType: "application/json",
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data, status, xhr) {
+                console.log(data);
+            }
+        });
+    }
+</script>
 </body>
 </html>
