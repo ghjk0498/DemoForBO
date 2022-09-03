@@ -7,6 +7,7 @@
     <title>Login</title>
 </head>
 <body>
+<div id="header"></div>
 <form action="/second/login" method="post">
     <label for="username">username : </label>
     <input type="text" id="username" name="username">
@@ -16,29 +17,33 @@
     <button type="button" onclick="callLogin()">login</button>
 </form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/js/common.js"></script>
 <script>
     function callLogin() {
-        let data = {
+        let ajaxHeader = {
+            "Authorization": "Bearer " + (localStorage.getItem("JWT") == null ? "login" : localStorage.getItem("JWT"))
+        };
+        let ajaxData = JSON.stringify({
             username: $("#username").val(),
             password: $("#password").val(),
-        };
+        });
 
         const header = $("meta[name='_csrf_header']").attr('content');
         const token = $("meta[name='_csrf']").attr('content');
 
         $.ajax({
             url: "/second/login",
-            type: "get",
-            headers: {
-                "Authorization": "Bearer empty",
-            },
-            data: data,
+            type: "post",
+            headers: ajaxHeader,
+            data: ajaxData,
             contentType: "application/json",
+            async: false,
             beforeSend: function(xhr){
                 xhr.setRequestHeader(header, token);
             },
             success: function (data, status, xhr) {
-                console.log(data);
+                localStorage.setItem("JWT", data);
+                window.location.href = "/second/";
             }
         });
     }

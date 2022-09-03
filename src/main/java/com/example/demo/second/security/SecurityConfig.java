@@ -22,22 +22,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
+        http.httpBasic().disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                // UsernamePasswordAuthenticationFilter에서 인증을 하는 것 같으니까
-                // jwtFilter에서 Authorization Header에 값이 login이면 위의 필터에 넘겨줘서 db 값 비교하게 하고
-                // token이 정상적이면 db 값 비교없이 넘어가게 하고
-                // 비정상이면 jwtFilter에서 거른다.
-//                    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                     .authorizeRequests()
-                    .antMatchers("/second/login", "/second/signup").permitAll()
-                    .antMatchers("/second/*").authenticated()
-                .and()
-                    .formLogin().disable();
-//                    .loginPage("/second/login")
-//                    .defaultSuccessUrl("/second/loginSuccess", true);
+                    .antMatchers("/second/", "/second/login", "/second/signup").permitAll()
+                    .antMatchers("/second/*").authenticated();
 
         return http.build();
     }

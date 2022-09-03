@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <input type="button" value="go /second/loginSuccess" onclick="callGet()">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <div id="app"></div>
+<script>
+    function callGet() {
+        let ajaxHeader = {
+            "Authorization": "Bearer " + (localStorage.getItem("JWT") == null ? "login" : localStorage.getItem("JWT"))
+        };
+
+        const header = $("meta[name='_csrf_header']").attr('content');
+        const token = $("meta[name='_csrf']").attr('content');
+
+        $.ajax({
+            url: "/second/loginSuccess",
+            type: "get",
+            headers: ajaxHeader,
+            contentType: "application/json",
+            async: false,
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data, status, xhr) {
+                $("#app").replaceWith(data);
+            },
+            error: function (data, textStatus, errorThrown) {
+                location.href = "/second/login";
+            }
+        });
+    }
+</script>
+</body>
+</html>

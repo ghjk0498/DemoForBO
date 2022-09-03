@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -17,15 +19,19 @@ public class JwtService {
     private final Key key = Keys.hmacShaKeyFor(JWT_SECRET.getBytes());
     private final int JWT_EXPIRATION_MS = 1000 * 60; // 60초
 
-    public String generateToken(Authentication authentication) {
+    public String generateToken(String username, String role) {
         Date now = new Date();
         Date expireDate = new Date(now.getTime() + JWT_EXPIRATION_MS);
 
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("username", username);
+
         return Jwts.builder()
-                .setSubject((String) authentication.getPrincipal())
+                .setSubject(role)
+                .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expireDate)
-                .signWith(key, SignatureAlgorithm.HS512)
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -35,12 +41,12 @@ public class JwtService {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.getSubject();
+        return (String) claims.get("username");
     }
 
     public boolean validateToken(String token) {
         if (token.equals("login")) {
-            return true;
+            return false;
         }
 
         try {

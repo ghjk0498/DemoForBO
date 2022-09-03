@@ -34,11 +34,11 @@ public class JwtFilter extends OncePerRequestFilter {
             boolean validation = jwtService.validateToken(jwt);
 
             if (!isEmpty(jwt) && validation) {
+                // 세션 등록
                 String username = jwtService.getUsernameFromJWT(jwt);
                 UserAuthentication authentication = new UserAuthentication(username, null, null);
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request)); //기본적으로 제공한 details 세팅
-
-                SecurityContextHolder.getContext().setAuthentication(authentication); //세션에서 계속 사용하기 위해 securityContext에 Authentication 등록
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
                 if (isEmpty(jwt)) {
                     request.setAttribute("unauthorization", "401 인증키 없음.");

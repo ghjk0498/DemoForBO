@@ -2,6 +2,7 @@ package com.example.demo.third;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,8 +14,10 @@ import java.util.Objects;
 @Controller
 @RequiredArgsConstructor
 public class ThirdController {
+
     private final PayService payService;
-    private final ApplicationContext context;
+    private final ApplicationContext context = null;
+
     @ResponseBody
     @GetMapping(value = {"third/{paySelect}", "third"})
     public String callThird(@PathVariable(required = false) String paySelect) {

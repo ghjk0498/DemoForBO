@@ -1,0 +1,5 @@
+create table demo_for_bo.users (
+	username varchar primary key,
+	password varchar not null,
+	role varchar not null
+);

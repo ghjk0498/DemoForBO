@@ -13,6 +13,7 @@ public class AjaxController {
     }
     @PostMapping("/ajax")
     public String ajaxPage(@RequestBody String name, @ModelAttribute Test test) {
+        // payload에 있는 값들은 @RequestBody로 받아야 함. Json 형태의 HTTP Body를 자바 객체로 변환
         System.out.println(name);
         System.out.println(test.toString());
         return "success";
