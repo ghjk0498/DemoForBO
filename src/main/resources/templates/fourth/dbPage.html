@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DB</title>
+</head>
+<body>
+<button type="button" onclick="getUsers('JDBCService')">JDBC</button>
+<button type="button" onclick="getUsers('SQLMapperService')">SQLMapper</button>
+<button type="button" onclick="getUsers('ORMService')">ORM</button>
+<hr>
+<div id="result" style="border: 1px solid black;">
+    result
+</div>
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script>
+    function getUsers(method) {
+        $.ajax({
+            url: "/fourth/users",
+            type: "get",
+            data: {
+                method: method
+            },
+            contentType: "application/json",
+            success: function (data) {
+                $("#result").text(method + "\n" + JSON.stringify(data));
+            }
+        });
+    }
+</script>
+</body>
+</html>
