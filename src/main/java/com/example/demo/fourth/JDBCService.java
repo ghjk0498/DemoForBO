@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("JDBCService")
+//@Service("JDBCService")
 @RequiredArgsConstructor
 public class JDBCService implements DBService {
-    private final JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate; // SQL Mapper
     @Override
     public List<CustomUser> selectUsers() {
         return jdbcTemplate.query("SELECT * FROM demo_for_bo.users",
