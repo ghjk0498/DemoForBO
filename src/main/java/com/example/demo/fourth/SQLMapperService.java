@@ -15,4 +15,8 @@ public class SQLMapperService implements DBService {
     public List<CustomUser> selectUsers() {
         return usersMapper.selectUsers();
     }
+	@Override
+	public int insertUsers(CustomUser user) {
+		return usersMapper.insertUsers(user);
+	}
 }

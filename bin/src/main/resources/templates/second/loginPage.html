@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}">
+    <meta name="_csrf" th:content="${_csrf.token}">
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script src="../../static/js/jquery-3.6.1.min.js"></script>
+</head>
+<body>
+<div id="header"></div>
+<form action="/second/login" method="post">
+    <label for="username">username : </label>
+    <input type="text" id="username" name="username">
+    <label for="password">password : </label>
+    <input type="password" id="password" name="password">
+    <button type="button" onclick="window.location='./signup'">signup</button>
+    <button type="button" onclick="callLogin()">login</button>
+</form>
+<script src="/js/jquery-3.6.1.min.js"></script>
+<script src="/js/common.js"></script>
+<script>
+    function callLogin() {
+        let ajaxHeader = {
+            "Authorization": "Bearer " + (localStorage.getItem("JWT") == null ? "login" : localStorage.getItem("JWT"))
+        };
+        let ajaxData = JSON.stringify({
+            username: $("#username").val(),
+            password: $("#password").val(),
+        });
+
+        const header = $("meta[name='_csrf_header']").attr('content');
+        const token = $("meta[name='_csrf']").attr('content');
+
+        $.ajax({
+            url: "/second/login",
+            type: "post",
+            headers: ajaxHeader,
+            data: ajaxData,
+            contentType: "application/json",
+            async: false,
+            beforeSend: function(xhr){
+                xhr.setRequestHeader(header, token);
+            },
+            success: function (data, status, xhr) {
+                localStorage.setItem("JWT", data);
+                window.location.href = "/second/";
+            }
+        });
+    }
+</script>
+</body>
+</html>

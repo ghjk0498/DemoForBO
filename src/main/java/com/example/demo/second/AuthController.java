@@ -17,7 +17,7 @@ public class AuthController {
     private final UserService userService;
     private final JwtService jwtService;
 
-    @GetMapping("/second/")
+    @GetMapping({"/second", "/second/"})
     public String secondIndex() {
         return "/second/index";
     }

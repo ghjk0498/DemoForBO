@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DBService {
     List<CustomUser> selectUsers();
+    int insertUsers(CustomUser user);
 }

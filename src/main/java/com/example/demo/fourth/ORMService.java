@@ -14,4 +14,8 @@ public class ORMService implements DBService {
     public List<CustomUser> selectUsers() {
         return userRepository.findAll();
     }
+	@Override
+	public int insertUsers(CustomUser user) {
+		return userRepository.save(user) == null ? 1 : -1;
+	}
 }
