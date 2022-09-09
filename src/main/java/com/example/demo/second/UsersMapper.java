@@ -6,7 +6,7 @@ import java.util.List;
 
 @Mapper
 public interface UsersMapper {
+	List<CustomUser> selectUsers();
     CustomUser selectUsersByUsername(String username);
     int insertUsers(CustomUser customUser);
-    List<CustomUser> selectUsers();
 }
